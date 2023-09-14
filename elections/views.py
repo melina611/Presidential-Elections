@@ -2,15 +2,27 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import UserForm
+from .forms import UserForm, LoginForm
 
 
 def index(request):
     return render(request, "elections/index.html")
 
 def login_user(request):
-    
-    return render(request, "elections/login.html")
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return render(request, "elections/home.html")
+            else:
+               return render(request, "elections/signUp.html") 
+    context = {'form': LoginForm}
+    return render(request, "elections/login.html", context)
 
 def signUp(request):
     if request.method == "POST":
