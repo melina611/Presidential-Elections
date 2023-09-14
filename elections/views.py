@@ -6,7 +6,8 @@ from .forms import UserForm, LoginForm
 
 
 def index(request):
-    return render(request, "elections/index.html")
+    context = {'form': LoginForm}
+    return render(request, "elections/index.html", context)
 
 def login_user(request):
     if request.method == "POST":

@@ -2,12 +2,32 @@
 
 {% block content %}
 
-<h1>welcome</h1>
-<button type="submit">
-    <a href="/signUp">signUp </a>
-</button>
-<button type="submit">
-    <a href="/login"> login </a>
-</button>
+<div class="box">
+    <img src="https://www.cypartners.co.uk/wp-content/uploads/2023/02/BRITISH-SCIENCE-WEEK-2-scaled.jpeg" alt="Example image" />
+</div>
+
+<form action="/login" method="post">
+    {% csrf_token %}
+    <div style="position: absolute; top: 80px; left: 450px; z-index: auto;">
+        <div class="card text-bg-light mb-3"  style="max-width: 40rem; min-width: 40rem; min-height: 25rem;">
+            <div class="card-header">
+                <h2 style="color: rgb(110, 43, 226);">Presidential Elections</h2>
+            </div>
+            <div class="card-body">
+                {{form.as_p}}
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        Log In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div style="position: absolute; top: 380px; left: 600px; z-index: auto;">
+    <a href="/signUp"> 
+        <h6>If you don't have an account, create one here!</h6>
+    </a>
+</div>
 
 {% endblock %}

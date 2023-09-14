@@ -10,5 +10,5 @@ class UserForm(forms.Form):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Confirm your password'}), required=True, min_length="6")
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Write your username'}), required=True)
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password'}), required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Write your username', 'class':"form-control"}), required=True)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password', 'class':"form-control"}), required=True)
