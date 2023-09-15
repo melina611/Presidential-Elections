@@ -2,12 +2,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.urls import reverse
 from .forms import UserForm, LoginForm
-
-
-def index(request):
-    context = {'form': LoginForm}
-    return render(request, "elections/index.html", context)
 
 def login_user(request):
     if request.method == "POST":
@@ -17,13 +13,15 @@ def login_user(request):
             password = form.cleaned_data['password']
 
             user = authenticate(username=username, password=password)
+
             if user is not None:
                 login(request, user)
                 return render(request, "elections/home.html")
             else:
-               return render(request, "elections/signUp.html") 
+               messages.error(request, "Incorrect username or password")
+               return redirect("/")    
     context = {'form': LoginForm}
-    return render(request, "elections/login.html", context)
+    return render(request, "elections/login_user.html", context)  
 
 def signUp(request):
     if request.method == "POST":
@@ -36,20 +34,23 @@ def signUp(request):
             createPassword = form.cleaned_data['create_password']
             confirmPassword = form.cleaned_data['confirm_password']
 
+            error = False
+
             existing_username = User.objects.filter(username=username).first()
             if existing_username:
-                messages.error(request, "This username is already registered")
-                return redirect("signUp")
-            
-            if createPassword != confirmPassword:
-                messages.error(request, "Passwords do not match")
-                return redirect("signUp")
-
+                error = True
+                messages.error(request, "This username already exists")
             existing_email = User.objects.filter(email=email).first()
             if existing_email:
+                error = True
                 messages.error(request, "This email address is already registered")
+            if createPassword != confirmPassword:
+                error = True
+                messages.error(request, "Passwords do not match")
+
+            if error:
                 return redirect("signUp")
-            
+
             users = User.objects.create_user(username, email, createPassword)
             users.first_name = firstName
             users.last_name = lastName

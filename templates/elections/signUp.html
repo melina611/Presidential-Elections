@@ -2,18 +2,38 @@
 
 {% block content %}
 
+<div class="box">
+    <img src="https://www.cypartners.co.uk/wp-content/uploads/2023/02/BRITISH-SCIENCE-WEEK-2-scaled.jpeg" alt="Example image" />
+</div>
+
 <form action="/signUp" method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">
-        Sign Up
-    </button>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <div style="position: absolute; top: 20px; left: 400px; z-index: auto;">
+        <div class="card text-bg-light mb-3"  style="min-width: 40rem; min-height: 25rem;">
+            <div class="card-header">
+                <h2 style="color: rgb(110, 43, 226);">Presidential Elections</h2>
+            </div>
+            <div class="card-body">
+                {{form.as_p}}
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li
+                            {% if message.tags %} 
+                                class="{{ message.tags }}"
+                            {% endif %}>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
 </form>
 {% endblock %}

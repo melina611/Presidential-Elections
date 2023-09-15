@@ -6,9 +6,9 @@
     <img src="https://www.cypartners.co.uk/wp-content/uploads/2023/02/BRITISH-SCIENCE-WEEK-2-scaled.jpeg" alt="Example image" />
 </div>
 
-<form action="/login" method="post">
+<form action="" method="post">
     {% csrf_token %}
-    <div style="position: absolute; top: 80px; left: 450px; z-index: auto;">
+    <div style="position: absolute; top: 80px; left: 400px; z-index: auto;">
         <div class="card text-bg-light mb-3"  style="max-width: 40rem; min-width: 40rem; min-height: 25rem;">
             <div class="card-header">
                 <h2 style="color: rgb(110, 43, 226);">Presidential Elections</h2>
@@ -21,10 +21,22 @@
                     </button>
                 </div>
             </div>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li
+                            {% if message.tags %} 
+                                class="{{ message.tags }}"
+                            {% endif %}>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 </form>
-<div style="position: absolute; top: 380px; left: 600px; z-index: auto;">
+<div style="position: absolute; top: 380px; left: 550px; z-index: auto;">
     <a href="/signUp"> 
         <h6>If you don't have an account, create one here!</h6>
     </a>
