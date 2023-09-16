@@ -2,8 +2,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.urls import reverse
-from .forms import UserForm, LoginForm
+from .models import Profile
+from .forms import UserForm, LoginForm, ProfileForm
 
 def login_user(request):
     if request.method == "POST":
@@ -16,10 +16,10 @@ def login_user(request):
 
             if user is not None:
                 login(request, user)
-                return render(request, "elections/home.html")
+                return redirect("profile")
             else:
                messages.error(request, "Incorrect username or password")
-               return redirect("/")    
+               return redirect("/")  
     context = {'form': LoginForm}
     return render(request, "elections/login_user.html", context)  
 
@@ -54,12 +54,19 @@ def signUp(request):
             users = User.objects.create_user(username, email, createPassword)
             users.first_name = firstName
             users.last_name = lastName
-            users.save()  
-            return redirect("home") 
+            users.save() 
+            return redirect("profile")  
         
     context = {'form': UserForm}
     return render(request, "elections/signUp.html", context)
 
 
-def home(request):
-    return render(request, "elections/home.html")
+def profile(request):
+    if request.method == "POST":
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            description_area = form.cleaned_data['description_area']
+            yourDescription = Profile(description= description_area)
+            yourDescription.save()
+    context = {'form': ProfileForm}
+    return render(request, "elections/profile.html", context)

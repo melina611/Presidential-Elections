@@ -12,3 +12,6 @@ class UserForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Write your username', 'class':"form-control"}), required=True)
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password', 'class':"form-control"}), required=True)
+
+class ProfileForm(forms.Form):
+    description_area = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write something about yourself', 'class':"form-control"}))   

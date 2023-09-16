@@ -1,8 +1,0 @@
-{% extends "elections/base.html" %}
-
-{% block content %}
-{% csrf_token %}
-{% if user.is_authenticated %}
-    <h1>Hello</h1>
-{% endif %}
-{% endblock %}
